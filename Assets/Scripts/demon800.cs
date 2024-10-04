@@ -7,15 +7,15 @@ public class Player : MonoBehaviour
   private float mvspeed = 0.2f;
   private Rigidbody2D rb2d;
   private Vector2 movement;
-  private SpriteRenderer _mainSpriteRenderer;
-  private SpriteRenderer _childSpriteRenderer;
+  [SerializeField]
+  private Sprite _normalForm;
+  [SerializeField]
+  private Sprite _demonForm;
   // Start is called before the first frame update
   void Start()
   {
     rb2d = GetComponent<Rigidbody2D>();
     rb2d.freezeRotation = true;
-    _mainSpriteRenderer = GetComponentInParent<SpriteRenderer>();
-    _childSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
   }
 
@@ -29,7 +29,6 @@ public class Player : MonoBehaviour
     movement = movement.normalized * mvspeed;
 
     rb2d.MovePosition(rb2d.position + movement);
-
   }
 
 }
