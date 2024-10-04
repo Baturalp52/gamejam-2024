@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
   [SerializeField]
-  private float mvspeed = 100.0f;
+  private float mvspeed = .2f;
   private float dashspeed = 1.0f;
   private float dashDuration = 0.1f;
   private float dashTimeLeft;
@@ -77,7 +77,7 @@ public class Player : MonoBehaviour
     {
       float h = Input.GetAxisRaw("Horizontal");
       Vector2 movement = new Vector2(h, 0);
-      movement = movement.normalized * mvspeed * Time.deltaTime;
+      movement = movement.normalized * mvspeed;
       Debug.Log(movement);
       rb2d.MovePosition(rb2d.position + movement);
     }
