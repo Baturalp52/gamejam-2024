@@ -13,8 +13,10 @@ public class Player : MonoBehaviour
 
   private Rigidbody2D rb2d;
   private Vector2 movement;
-  private SpriteRenderer _mainSpriteRenderer;
-  private SpriteRenderer _childSpriteRenderer;
+  [SerializeField]
+  private Sprite _normalForm;
+  [SerializeField]
+  private Sprite _demonForm;
   // Start is called before the first frame update
   void Start()
   {
@@ -70,7 +72,6 @@ public class Player : MonoBehaviour
     }
 
     rb2d.MovePosition(rb2d.position + movement);
-
   }
 
 }
