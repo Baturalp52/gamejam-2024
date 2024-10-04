@@ -17,13 +17,14 @@ public class Player : MonoBehaviour
   private Sprite _normalForm;
   [SerializeField]
   private Sprite _demonForm;
+  private SpriteRenderer _spriteRenderer;
   // Start is called before the first frame update
   void Start()
   {
     rb2d = GetComponent<Rigidbody2D>();
     rb2d.freezeRotation = true;
-    _mainSpriteRenderer = GetComponentInParent<SpriteRenderer>();
-    _childSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
+    _spriteRenderer = GetComponent<SpriteRenderer>();
+    _spriteRenderer.sprite = _normalForm;
 
   }
 
@@ -72,6 +73,23 @@ public class Player : MonoBehaviour
     }
 
     rb2d.MovePosition(rb2d.position + movement);
+
+    if (Input.GetKeyDown(KeyCode.C))
+    {
+      ChangingForm();
+    }
   }
 
+  private void ChangingForm()
+  {
+    if (_spriteRenderer.sprite == _normalForm)
+    {
+      _spriteRenderer.sprite = _demonForm;
+    }
+
+    else
+    {
+      _spriteRenderer.sprite = _normalForm;
+    }
+  }
 }
