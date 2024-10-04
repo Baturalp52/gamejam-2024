@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-  private float mvspeed = 20.0f;
+  [SerializeField]
+  private float mvspeed = 100.0f;
   private float dashspeed = 1.0f;
   private float dashDuration = 0.1f;
   private float dashTimeLeft;
+
   private bool canDash = true;
   private bool isDashing = false;
 
   private Rigidbody2D rb2d;
-  private Vector2 movement;
   [SerializeField]
   private Sprite _normalForm;
   [SerializeField]
@@ -36,52 +37,29 @@ public class Player : MonoBehaviour
     }
   }
 
+  void OnCollisionStay2D(Collision2D col)
+  {
+    if (col.gameObject.tag == "Floor")
+    {
+      canDash = true;
+    }
+  }
+
   // Update is called once per frame
   void Update()
   {
 
-    float h = Input.GetAxisRaw("Horizontal");
-    float v = Input.GetAxisRaw("Vertical");
-    float dashKey = Input.GetAxisRaw("Fire3");
+    Dash();
+    Move();
+    ChangingForm();
 
-    Vector2 movement;
-
-    if (dashKey != 0 && canDash)
-    {
-      movement = new Vector2(h, 0);
-      movement = movement.normalized * dashspeed;
-      canDash = false;
-      isDashing = true;
-      dashTimeLeft = dashDuration;
-    }
-
-    if (isDashing)
-    {
-      movement = new Vector2(h, 0).normalized * dashspeed;
-      dashTimeLeft -= Time.deltaTime;
-
-      if (dashTimeLeft <= 0)
-      {
-        isDashing = false;
-      }
-
-    }
-    else
-    {
-      movement = new Vector2(h, v);
-      movement = movement.normalized * mvspeed * Time.deltaTime;
-    }
-
-    rb2d.MovePosition(rb2d.position + movement);
-
-    if (Input.GetKeyDown(KeyCode.C))
-    {
-      ChangingForm();
-    }
   }
+
 
   private void ChangingForm()
   {
+    if (!Input.GetKeyDown(KeyCode.C)) return;
+
     if (_spriteRenderer.sprite == _normalForm)
     {
       _spriteRenderer.sprite = _demonForm;
@@ -90,6 +68,45 @@ public class Player : MonoBehaviour
     else
     {
       _spriteRenderer.sprite = _normalForm;
+    }
+  }
+
+  private void Move()
+  {
+    if (!isDashing)
+    {
+      float h = Input.GetAxisRaw("Horizontal");
+      Vector2 movement = new Vector2(h, 0);
+      movement = movement.normalized * mvspeed * Time.deltaTime;
+      Debug.Log(movement);
+      rb2d.MovePosition(rb2d.position + movement);
+    }
+
+  }
+
+  private void Dash()
+  {
+
+    float dashKey = Input.GetAxisRaw("Fire3");
+
+    if (dashKey != 0 && canDash)
+    {
+      canDash = false;
+      isDashing = true;
+      dashTimeLeft = dashDuration;
+    }
+
+    if (isDashing)
+    {
+      float h = Input.GetAxisRaw("Horizontal");
+
+      Vector2 movement = new Vector2(h, 0).normalized * dashspeed;
+      dashTimeLeft -= Time.deltaTime;
+      if (dashTimeLeft <= 0)
+      {
+        isDashing = false;
+      }
+      rb2d.MovePosition(rb2d.position + movement);
     }
   }
 }
