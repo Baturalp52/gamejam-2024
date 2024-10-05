@@ -177,7 +177,6 @@ public class Player : MonoBehaviour
         jumpTimeLeft -= Time.deltaTime;
         rb2d.MovePosition(rb2d.position + movement * (jumpTimeLeft / jumpTime));
 
-        /*rb2d.AddForce(new Vector2(rb2d.velocity.x, jumpForce) * (jumpTimeLeft / jumpTime));*/
       }
     }
   }
