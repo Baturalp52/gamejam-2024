@@ -32,6 +32,8 @@ public class Player : MonoBehaviour
   private bool _canchange = true;
   private bool _isFacingRight = true;
   private bool _demonBody = false;
+  [SerializeField]
+  private bool _jumpingControl = false;
   // Start is called before the first frame update
   void Start()
   {
@@ -42,6 +44,7 @@ public class Player : MonoBehaviour
     _playerAnimator = GetComponent<Animator>();
     _playerAnimator.SetBool("isitnormalform", true);
     _playerAnimator.SetBool("regularwalking", false);
+    _playerAnimator.SetBool("ishumanjumping", false);
 
   }
 
@@ -58,6 +61,8 @@ public class Player : MonoBehaviour
   {
     if (col.gameObject.tag == "Floor")
     {
+      _jumpingControl = false;
+      JumpingAnimation();
       foreach (ContactPoint2D contact in col.contacts)
       {
         if (contact.normal.y > 0.5f)
@@ -88,10 +93,9 @@ public class Player : MonoBehaviour
   private void ChangingForm()
   {
     if (!Input.GetKeyDown(KeyCode.C)) return;
-    //if (!_canchange) return;
     _playerAnimator.SetBool("isitnormalform", !_canchange);
+
     _canchange = !_canchange;
-    _demonBody = !_demonBody;
   }
 
   private void Move()
@@ -136,6 +140,9 @@ public class Player : MonoBehaviour
     {
       if (jumpKey)
       {
+        _jumpingControl = true;
+        JumpingAnimation();
+        _playerAnimator.SetBool("ishumanjumping", true);
         canDoubleJump = !canDoubleJump;
         isJumping = true;
         jumpTimeLeft = jumpTime;
@@ -211,4 +218,17 @@ public class Player : MonoBehaviour
   {
     return _playerAnimator;
   }
+
+  private void JumpingAnimation()
+  {
+    if (_jumpingControl == true)
+    {
+        _playerAnimator.SetBool("ishumanjumping", true);
+    }
+    else
+    {
+      _playerAnimator.SetBool("ishumanjumping", false);
+    }
+  }
+
 }
