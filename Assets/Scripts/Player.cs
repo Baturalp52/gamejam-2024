@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
   private float dashDuration = 0.1f;
   private float dashTimeLeft;
 
-  private float jumpForce = 300f;
+  private float jumpForce = 700f;
   private float jumpTime = 0.2f;
   private float jumpTimeLeft;
 
