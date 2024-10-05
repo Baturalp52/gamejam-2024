@@ -106,7 +106,7 @@ public class Player : MonoBehaviour
   {
     if (!Input.GetKeyDown(KeyCode.C)) return;
     _playerAnimator.SetBool("isitnormalform", !_canchange);
-    _demonBody = !_demonBody;
+
     _canchange = !_canchange;
   }
 
@@ -176,7 +176,6 @@ public class Player : MonoBehaviour
         Vector2 movement = new Vector2(h * mvspeed, jumpForce);
         jumpTimeLeft -= Time.deltaTime;
         rb2d.MovePosition(rb2d.position + movement * (jumpTimeLeft / jumpTime));
-
       }
     }
   }
@@ -196,6 +195,22 @@ public class Player : MonoBehaviour
     if (isDashing)
     {
       float h = Input.GetAxisRaw("Horizontal");
+      if (h > 0)
+      {
+        if (_isFacingRight == false)
+        {
+          Flip();
+        }
+        _playerAnimator.SetBool("regularwalking", true);
+      }
+      else
+      {
+        if (_isFacingRight == true)
+        {
+          Flip();
+        }
+        _playerAnimator.SetBool("regularwalking", true);
+      }
 
       Vector2 movement = new Vector2(h, 0).normalized * dashspeed;
       dashTimeLeft -= Time.deltaTime;
@@ -274,4 +289,5 @@ public class Player : MonoBehaviour
     // Apply the new camera position
     mainCamera.transform.position = cameraPosition;
   }
+
 }
