@@ -106,7 +106,7 @@ public class Player : MonoBehaviour
   {
     if (!Input.GetKeyDown(KeyCode.C)) return;
     _playerAnimator.SetBool("isitnormalform", !_canchange);
-
+    _demonBody = !_demonBody;
     _canchange = !_canchange;
   }
 
