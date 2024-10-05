@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
   private float dashDuration = 0.1f;
   private float dashTimeLeft;
 
-  private float jumpForce = 90f;
+  private float jumpForce = 300f;
   private float jumpTime = 0.2f;
   private float jumpTimeLeft;
 
@@ -58,11 +58,18 @@ public class Player : MonoBehaviour
   {
     if (col.gameObject.tag == "Floor")
     {
-      if (jumpTimeLeft <= 0)
+      foreach (ContactPoint2D contact in col.contacts)
       {
-        isJumping = false;
-        canJump = true;
+        if (contact.normal.y > 0.5f)
+        {
+          if (jumpTimeLeft <= 0)
+          {
+            isJumping = false;
+            canJump = true;
+          }
+        }
       }
+
     }
   }
 
@@ -112,8 +119,7 @@ public class Player : MonoBehaviour
         }
         _playerAnimator.SetBool("regularwalking", true);
       }
-
-      else 
+      else
       {
         _playerAnimator.SetBool("regularwalking", false);
       }
@@ -179,6 +185,7 @@ public class Player : MonoBehaviour
       rb2d.MovePosition(rb2d.position + movement);
     }
   }
+
   private void Flip()
   {
     _isFacingRight = !_isFacingRight;
@@ -198,5 +205,10 @@ public class Player : MonoBehaviour
     {
       _playerAnimator.SetBool("demonwalking", false);
     }
+  }
+  
+  public Animator getPlayerAnimator()
+  {
+    return _playerAnimator;
   }
 }
