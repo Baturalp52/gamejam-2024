@@ -84,6 +84,7 @@ public class Player : MonoBehaviour
   // Update is called once per frame
   void Update()
   {
+    Debug.Log(_demonBody);
 
     Dash();
     Move();
@@ -107,6 +108,7 @@ public class Player : MonoBehaviour
     if (!Input.GetKeyDown(KeyCode.C)) return;
     _playerAnimator.SetBool("isitnormalform", !_canchange);
 
+    _demonBody = !_demonBody;
     _canchange = !_canchange;
   }
 
@@ -148,7 +150,7 @@ public class Player : MonoBehaviour
 
     bool jumpKey = Input.GetButtonDown("Jump");
 
-    if (canJump || canDoubleJump)
+    if (canJump || (canDoubleJump && _demonBody))
     {
       if (jumpKey)
       {
@@ -182,6 +184,7 @@ public class Player : MonoBehaviour
 
   private void Dash()
   {
+    if (!_demonBody) return;
 
     float dashKey = Input.GetAxisRaw("DashKey");
 
@@ -271,7 +274,7 @@ public class Player : MonoBehaviour
       {
         _playerAnimator.SetBool("ishumanjumping", false);
       }
-      
+
     }
   }
 
