@@ -12920,7 +12920,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 491a2717215aa1a46b5d517e4775741d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 500
   mainCamera: {fileID: 519420031}
   _normalForm: {fileID: 21300000, guid: 259f4a2434a3c384c88c30332dd62081, type: 3}
   _demonForm: {fileID: 21300000, guid: 9d11d67cfacc2e54986e375d02d165f8, type: 3}
@@ -13254,7 +13253,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 144.4}
+  m_AnchoredPosition: {x: -6, y: 179}
   m_SizeDelta: {x: 481.3, y: 18.400002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1386231179
@@ -13404,7 +13403,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}

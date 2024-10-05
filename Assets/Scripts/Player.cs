@@ -236,11 +236,26 @@ public class Player : MonoBehaviour
   {
     if (_jumpingControl == true)
     {
-      _playerAnimator.SetBool("ishumanjumping", true);
+      if (_demonBody == true)
+      {
+        _playerAnimator.SetBool("isdemonjumping", true);
+      }
+      else
+      {
+        _playerAnimator.SetBool("ishumanjumping", true);
+      }
     }
     else
     {
-      _playerAnimator.SetBool("ishumanjumping", false);
+      if (_demonBody == true)
+      {
+        _playerAnimator.SetBool("isdemonjumping", false);
+      }
+      else
+      {
+        _playerAnimator.SetBool("ishumanjumping", false);
+      }
+      
     }
   }
 
