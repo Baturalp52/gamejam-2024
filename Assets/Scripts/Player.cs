@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
   private float dashDuration = 0.1f;
   private float dashTimeLeft;
 
-  private float jumpForce = 500f;
+  private float jumpForce = 1f;
   private float jumpTime = 0.2f;
   private float jumpTimeLeft;
 
@@ -159,8 +159,6 @@ public class Player : MonoBehaviour
         isJumping = true;
         jumpTimeLeft = jumpTime;
         canJump = false;
-        rb2d.velocity = new Vector2(rb2d.velocity.x, 0); // Reset vertical velocity
-        rb2d.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse); // Apply force for the jump
       }
       else
       {
@@ -173,8 +171,13 @@ public class Player : MonoBehaviour
     {
       if (jumpTimeLeft > 0)
       {
+        float h = Input.GetAxisRaw("Horizontal");
+
+        Vector2 movement = new Vector2(h * mvspeed, jumpForce);
         jumpTimeLeft -= Time.deltaTime;
-        rb2d.AddForce(new Vector2(rb2d.velocity.x, jumpForce) * (jumpTimeLeft / jumpTime));
+        rb2d.MovePosition(rb2d.position + movement * (jumpTimeLeft / jumpTime));
+
+        /*rb2d.AddForce(new Vector2(rb2d.velocity.x, jumpForce) * (jumpTimeLeft / jumpTime));*/
       }
     }
   }
