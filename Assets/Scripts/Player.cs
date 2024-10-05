@@ -31,6 +31,7 @@ public class Player : MonoBehaviour
   private Animator _playerAnimator;
   private bool _canchange = true;
   private bool _isFacingRight = true;
+  private bool _demonBody = false;
   // Start is called before the first frame update
   void Start()
   {
@@ -73,6 +74,7 @@ public class Player : MonoBehaviour
     Move();
     Jump();
     ChangingForm();
+    BodyChecker();
   }
 
 
@@ -82,6 +84,7 @@ public class Player : MonoBehaviour
     //if (!_canchange) return;
     _playerAnimator.SetBool("isitnormalform", !_canchange);
     _canchange = !_canchange;
+    _demonBody = !_demonBody;
   }
 
   private void Move()
@@ -182,5 +185,18 @@ public class Player : MonoBehaviour
     Vector2 theScale = transform.localScale;
     theScale.x *= -1;
     transform.localScale = theScale;
+  }
+
+  private void BodyChecker()
+  {
+    float h = Input.GetAxisRaw("Horizontal");
+    if (_demonBody == true && h != 0)
+    {
+      _playerAnimator.SetBool("demonwalking", true);
+    }
+    else
+    {
+      _playerAnimator.SetBool("demonwalking", false);
+    }
   }
 }
