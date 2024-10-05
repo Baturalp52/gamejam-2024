@@ -12698,6 +12698,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 491a2717215aa1a46b5d517e4775741d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpForce: 500
   mainCamera: {fileID: 519420031}
   _normalForm: {fileID: 21300000, guid: 259f4a2434a3c384c88c30332dd62081, type: 3}
   _demonForm: {fileID: 21300000, guid: 9d11d67cfacc2e54986e375d02d165f8, type: 3}
