@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -26,6 +27,8 @@ public class Player : MonoBehaviour
   private Sprite _demonForm;
   private SpriteRenderer _spriteRenderer;
   private Animator _playerAnimator;
+  private bool _canchange = true;
+  private bool _isFacingRight = true;
   // Start is called before the first frame update
   void Start()
   {
@@ -34,6 +37,8 @@ public class Player : MonoBehaviour
     _spriteRenderer = GetComponent<SpriteRenderer>();
     _spriteRenderer.sprite = _normalForm;
     _playerAnimator = GetComponent<Animator>();
+    _playerAnimator.SetBool("isitnormalform", true);
+    _playerAnimator.SetBool("regularwalking", false);
 
   }
 
@@ -63,28 +68,15 @@ public class Player : MonoBehaviour
     Move();
     Jump();
     ChangingForm();
-
   }
 
 
   private void ChangingForm()
   {
     if (!Input.GetKeyDown(KeyCode.C)) return;
-
-    if (_spriteRenderer.sprite == _normalForm)
-    {
-      //_playerAnimator.SetBool("NormaltoDemon", true);
-      //_playerAnimator.SetBool("DemontoNormal", false);
-      _spriteRenderer.sprite = _demonForm;
-    }
-
-    else
-    {
-      //_playerAnimator.SetBool("NormaltoDemon", false);
-      //_playerAnimator.SetBool("DemontoNormal", true);
-      //_playerAnimator.SetBool("DemontoNormal", false);
-      _spriteRenderer.sprite = _normalForm;
-    }
+    //if (!_canchange) return;
+    _playerAnimator.SetBool("isitnormalform", !_canchange);
+    _canchange = !_canchange;
   }
 
   private void Move()
@@ -95,6 +87,28 @@ public class Player : MonoBehaviour
       Vector2 movement = new Vector2(h, 0);
       movement = movement.normalized * mvspeed;
       rb2d.MovePosition(rb2d.position + movement);
+      if (h > 0)
+      {
+        if (_isFacingRight == false)
+        {
+          Flip();
+        }
+        _playerAnimator.SetBool("regularwalking", true);
+      }
+
+      else if (h < 0)
+      {
+        if (_isFacingRight == true)
+        {
+          Flip();
+        }
+        _playerAnimator.SetBool("regularwalking", true);
+      }
+
+      else 
+      {
+        _playerAnimator.SetBool("regularwalking", false);
+      }
     }
 
   }
@@ -145,5 +159,12 @@ public class Player : MonoBehaviour
       }
       rb2d.MovePosition(rb2d.position + movement);
     }
+  }
+  private void Flip()
+  {
+    _isFacingRight = !_isFacingRight;
+    Vector2 theScale = transform.localScale;
+    theScale.x *= -1;
+    transform.localScale = theScale;
   }
 }
