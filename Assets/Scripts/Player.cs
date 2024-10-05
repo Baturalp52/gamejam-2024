@@ -10,8 +10,8 @@ public class Player : MonoBehaviour
   private float dashDuration = 0.1f;
   private float dashTimeLeft;
 
-  private float jumpForce = 200f;
-  private float jumpTime = 0.3f;
+  private float jumpForce = 250f;
+  private float jumpTime = 0.1f;
   private float jumpTimeLeft;
 
   private bool canDash = true;
