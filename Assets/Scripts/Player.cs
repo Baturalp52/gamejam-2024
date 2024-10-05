@@ -73,15 +73,16 @@ public class Player : MonoBehaviour
 
     if (_spriteRenderer.sprite == _normalForm)
     {
-      _playerAnimator.SetBool("NormaltoDemon", true);
-      _playerAnimator.SetBool("DemontoNormal", false);
+      //_playerAnimator.SetBool("NormaltoDemon", true);
+      //_playerAnimator.SetBool("DemontoNormal", false);
       _spriteRenderer.sprite = _demonForm;
     }
 
     else
     {
-      _playerAnimator.SetBool("NormaltoDemon", false);
-      _playerAnimator.SetBool("DemontoNormal", true);
+      //_playerAnimator.SetBool("NormaltoDemon", false);
+      //_playerAnimator.SetBool("DemontoNormal", true);
+      //_playerAnimator.SetBool("DemontoNormal", false);
       _spriteRenderer.sprite = _normalForm;
     }
   }
