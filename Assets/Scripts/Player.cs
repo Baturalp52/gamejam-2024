@@ -22,6 +22,9 @@ public class Player : MonoBehaviour
   private bool isDashing = false;
   private bool isJumping = false;
 
+  public Camera mainCamera;
+  private float screenHalfWidthInWorldUnits;
+
   private Rigidbody2D rb2d;
   [SerializeField]
   private Sprite _normalForm;
@@ -45,7 +48,7 @@ public class Player : MonoBehaviour
     _playerAnimator.SetBool("isitnormalform", true);
     _playerAnimator.SetBool("regularwalking", false);
     _playerAnimator.SetBool("ishumanjumping", false);
-
+    screenHalfWidthInWorldUnits = mainCamera.aspect * mainCamera.orthographicSize;
   }
 
 
@@ -87,6 +90,15 @@ public class Player : MonoBehaviour
     Jump();
     ChangingForm();
     BodyChecker();
+    MoveCamera();
+  }
+
+  private void MoveCamera()
+  {
+    if (IsPlayerOutOfBounds())
+    {
+      MoveCameraHorizontally();
+    }
   }
 
 
@@ -213,7 +225,7 @@ public class Player : MonoBehaviour
       _playerAnimator.SetBool("demonwalking", false);
     }
   }
-  
+
   public Animator getPlayerAnimator()
   {
     return _playerAnimator;
@@ -223,12 +235,42 @@ public class Player : MonoBehaviour
   {
     if (_jumpingControl == true)
     {
-        _playerAnimator.SetBool("ishumanjumping", true);
+      _playerAnimator.SetBool("ishumanjumping", true);
     }
     else
     {
       _playerAnimator.SetBool("ishumanjumping", false);
     }
+  }
+
+
+  bool IsPlayerOutOfBounds()
+  {
+    // Get the player's position relative to the camera
+    Vector3 playerViewportPosition = mainCamera.WorldToViewportPoint(transform.position);
+
+    // Check if the player is outside the camera's view (X-axis)
+    return playerViewportPosition.x < 0 || playerViewportPosition.x > 1;
+  }
+
+  void MoveCameraHorizontally()
+  {
+    Vector3 cameraPosition = mainCamera.transform.position;
+
+    // Check if the player is to the left or right of the screen and move the camera accordingly
+    if (transform.position.x < mainCamera.transform.position.x)
+    {
+      // Player is on the left, move camera one screen width to the left
+      cameraPosition.x -= screenHalfWidthInWorldUnits * 2;
+    }
+    else if (transform.position.x > mainCamera.transform.position.x)
+    {
+      // Player is on the right, move camera one screen width to the right
+      cameraPosition.x += screenHalfWidthInWorldUnits * 2;
+    }
+
+    // Apply the new camera position
+    mainCamera.transform.position = cameraPosition;
   }
 
 }
