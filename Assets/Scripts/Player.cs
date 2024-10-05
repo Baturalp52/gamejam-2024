@@ -10,11 +10,13 @@ public class Player : MonoBehaviour
   private float dashDuration = 0.1f;
   private float dashTimeLeft;
 
-  private float jumpForce = 250f;
-  private float jumpTime = 0.1f;
+  private float jumpForce = 90f;
+  private float jumpTime = 0.2f;
   private float jumpTimeLeft;
 
   private bool canDash = true;
+  private bool canDoubleJump = false;
+  private bool canJump = true;
 
   private bool isDashing = false;
   private bool isJumping = false;
@@ -49,7 +51,10 @@ public class Player : MonoBehaviour
     if (col.gameObject.tag == "Floor")
     {
       if (jumpTimeLeft <= 0)
+      {
         isJumping = false;
+        canJump = true;
+      }
     }
   }
 
@@ -95,16 +100,27 @@ public class Player : MonoBehaviour
   private void Jump()
   {
 
-    if (!isJumping)
+    bool jumpKey = Input.GetButtonDown("Jump");
+
+    if (canJump || canDoubleJump)
     {
-      float jumpKey = Input.GetAxisRaw("Jump");
-      if (jumpKey != 0)
+      if (jumpKey)
       {
+        canDoubleJump = !canDoubleJump;
         isJumping = true;
         jumpTimeLeft = jumpTime;
+        canJump = false;
+        rb2d.velocity = new Vector2(rb2d.velocity.x, 0); // Reset vertical velocity
+        rb2d.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse); // Apply force for the jump
       }
+      else
+      {
+        canJump = true;
+      }
+
     }
-    else
+
+    if (isJumping)
     {
       if (jumpTimeLeft > 0)
       {
