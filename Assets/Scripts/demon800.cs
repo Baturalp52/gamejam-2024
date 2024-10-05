@@ -6,7 +6,8 @@ public class Player : MonoBehaviour
 {
   [SerializeField]
   private float mvspeed = .2f;
-  private float dashspeed = 1.0f;
+  [SerializeField]
+  private float dashspeed = .7f;
   private float dashDuration = 0.1f;
   private float dashTimeLeft;
 
