@@ -5,12 +5,19 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
   private float mvspeed = .2f;
+
   private float dashspeed = .7f;
   private float dashDuration = 0.1f;
   private float dashTimeLeft;
 
+  private float jumpForce = 150f;
+  private float jumpTime = 0.7f;
+  private float jumpTimeLeft;
+
   private bool canDash = true;
+
   private bool isDashing = false;
+  private bool isJumping = false;
 
   private Rigidbody2D rb2d;
   [SerializeField]
@@ -28,13 +35,6 @@ public class Player : MonoBehaviour
 
   }
 
-  void OnCollisionEnter2D(Collision2D col)
-  {
-    if (col.gameObject.tag == "Floor")
-    {
-      canDash = true;
-    }
-  }
 
   void OnCollisionStay2D(Collision2D col)
   {
@@ -44,12 +44,22 @@ public class Player : MonoBehaviour
     }
   }
 
+  void OnCollisionEnter2D(Collision2D col)
+  {
+    if (col.gameObject.tag == "Floor")
+    {
+      if (jumpTimeLeft <= 0)
+        isJumping = false;
+    }
+  }
+
   // Update is called once per frame
   void Update()
   {
 
     Dash();
     Move();
+    Jump();
     ChangingForm();
 
   }
@@ -80,6 +90,28 @@ public class Player : MonoBehaviour
       rb2d.MovePosition(rb2d.position + movement);
     }
 
+  }
+
+  private void Jump()
+  {
+
+    if (!isJumping)
+    {
+      float jumpKey = Input.GetAxisRaw("Jump");
+      if (jumpKey != 0)
+      {
+        isJumping = true;
+        jumpTimeLeft = jumpTime;
+      }
+    }
+    else
+    {
+      if (jumpTimeLeft > 0)
+      {
+        rb2d.AddForce(new Vector2(rb2d.velocity.x, jumpForce));
+        jumpTimeLeft -= Time.deltaTime;
+      }
+    }
   }
 
   private void Dash()
