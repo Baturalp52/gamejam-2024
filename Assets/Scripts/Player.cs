@@ -57,11 +57,18 @@ public class Player : MonoBehaviour
   {
     if (col.gameObject.tag == "Floor")
     {
-      if (jumpTimeLeft <= 0)
+      foreach (ContactPoint2D contact in col.contacts)
       {
-        isJumping = false;
-        canJump = true;
+        if (contact.normal.y > 0.5f)
+        {
+          if (jumpTimeLeft <= 0)
+          {
+            isJumping = false;
+            canJump = true;
+          }
+        }
       }
+
     }
   }
 
