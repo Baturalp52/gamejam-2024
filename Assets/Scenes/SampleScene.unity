@@ -373,8 +373,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 491a2717215aa1a46b5d517e4775741d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mvspeed: 0.2
-  dashspeed: 0.7
   _normalForm: {fileID: 21300000, guid: a2703a85c6b9a9e45aa8ace15c4d6753, type: 3}
   _demonForm: {fileID: 21300000, guid: 06045e873d26f104e8f4abfbc8f2711c, type: 3}
 --- !u!212 &918545602

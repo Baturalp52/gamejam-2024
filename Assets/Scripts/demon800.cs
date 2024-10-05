@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-  [SerializeField]
   private float mvspeed = .2f;
-  [SerializeField]
   private float dashspeed = .7f;
   private float dashDuration = 0.1f;
   private float dashTimeLeft;
