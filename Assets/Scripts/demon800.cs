@@ -78,7 +78,6 @@ public class Player : MonoBehaviour
       float h = Input.GetAxisRaw("Horizontal");
       Vector2 movement = new Vector2(h, 0);
       movement = movement.normalized * mvspeed;
-      Debug.Log(movement);
       rb2d.MovePosition(rb2d.position + movement);
     }
 
