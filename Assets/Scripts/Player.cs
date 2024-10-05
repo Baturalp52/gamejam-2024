@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
   private float dashDuration = 0.1f;
   private float dashTimeLeft;
 
-  private float jumpForce = 90f;
+  private float jumpForce = 300f;
   private float jumpTime = 0.2f;
   private float jumpTimeLeft;
 
@@ -109,8 +109,7 @@ public class Player : MonoBehaviour
         }
         _playerAnimator.SetBool("regularwalking", true);
       }
-
-      else 
+      else
       {
         _playerAnimator.SetBool("regularwalking", false);
       }
@@ -176,6 +175,7 @@ public class Player : MonoBehaviour
       rb2d.MovePosition(rb2d.position + movement);
     }
   }
+
   private void Flip()
   {
     _isFacingRight = !_isFacingRight;
@@ -183,4 +183,10 @@ public class Player : MonoBehaviour
     theScale.x *= -1;
     transform.localScale = theScale;
   }
+
+  public Animator getPlayerAnimator()
+  {
+    return _playerAnimator;
+  }
+
 }
