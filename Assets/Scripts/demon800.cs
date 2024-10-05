@@ -85,7 +85,7 @@ public class Player : MonoBehaviour
   private void Dash()
   {
 
-    float dashKey = Input.GetAxisRaw("Fire3");
+    float dashKey = Input.GetAxisRaw("DashKey");
 
     if (dashKey != 0 && canDash)
     {
