@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
   [SerializeField]
   private Sprite _demonForm;
   private SpriteRenderer _spriteRenderer;
+  private Animator _playerAnimator;
   // Start is called before the first frame update
   void Start()
   {
@@ -32,6 +33,7 @@ public class Player : MonoBehaviour
     rb2d.freezeRotation = true;
     _spriteRenderer = GetComponent<SpriteRenderer>();
     _spriteRenderer.sprite = _normalForm;
+    _playerAnimator = GetComponent<Animator>();
 
   }
 
@@ -71,11 +73,16 @@ public class Player : MonoBehaviour
 
     if (_spriteRenderer.sprite == _normalForm)
     {
+      //_playerAnimator.SetBool("NormaltoDemon", true);
+      //_playerAnimator.SetBool("DemontoNormal", false);
       _spriteRenderer.sprite = _demonForm;
     }
 
     else
     {
+      //_playerAnimator.SetBool("NormaltoDemon", false);
+      //_playerAnimator.SetBool("DemontoNormal", true);
+      //_playerAnimator.SetBool("DemontoNormal", false);
       _spriteRenderer.sprite = _normalForm;
     }
   }
