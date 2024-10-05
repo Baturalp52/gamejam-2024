@@ -11,7 +11,8 @@ public class Player : MonoBehaviour
   private float dashDuration = 0.1f;
   private float dashTimeLeft;
 
-  private float jumpForce = 700f;
+
+  private float jumpForce = 500f;
   private float jumpTime = 0.2f;
   private float jumpTimeLeft;
 
@@ -106,7 +107,7 @@ public class Player : MonoBehaviour
   {
     if (!Input.GetKeyDown(KeyCode.C)) return;
     _playerAnimator.SetBool("isitnormalform", !_canchange);
-
+    _demonBody = !_demonBody;
     _canchange = !_canchange;
   }
 
@@ -173,8 +174,8 @@ public class Player : MonoBehaviour
     {
       if (jumpTimeLeft > 0)
       {
-        rb2d.AddForce(new Vector2(rb2d.velocity.x, jumpForce));
         jumpTimeLeft -= Time.deltaTime;
+        rb2d.AddForce(new Vector2(rb2d.velocity.x, jumpForce) * (jumpTimeLeft / jumpTime));
       }
     }
   }
@@ -272,5 +273,4 @@ public class Player : MonoBehaviour
     // Apply the new camera position
     mainCamera.transform.position = cameraPosition;
   }
-
 }
