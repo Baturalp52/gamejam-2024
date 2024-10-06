@@ -67,7 +67,6 @@ public class Player : MonoBehaviour
         if (col.gameObject.tag == "Diken")
         {
 
-            Debug.Log("diken dokundu");
             rb2d.position = startpos;
         }
 
