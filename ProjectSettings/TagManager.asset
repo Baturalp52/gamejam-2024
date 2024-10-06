@@ -16,7 +16,7 @@ TagManager:
   - UI
   - Ground
   - Wall
-  - 
+  - Background
   - 
   - 
   - 
@@ -43,6 +43,9 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 4195726647
     locked: 0
   - name: Oyun
     uniqueID: 507424209
