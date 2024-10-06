@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private int map = 0;
+  private int map = 0;
   private float mvspeed = .2f;
 
   private float dashspeed = .7f;
@@ -23,30 +23,34 @@ public class Player : MonoBehaviour
   private bool isDashing = false;
   private bool isJumping = false;
 
-  public Camera mainCamera;
   private float screenHalfWidthInWorldUnits;
+  public Camera mainCamera;
 
   private Vector2 startpos_0 = new Vector2(-10.66f, 4.477457f);
-    private Vector2 startpos_1 = new Vector2(14.18851f, -4.522478f);
-    private Vector2 startpos_2 = new Vector2(40.76052f, 5.477468f);
-    private Vector2 startpos_3 = new Vector2(66.0155f, 1.477522f);
-    private Vector2 startpos_4 = new Vector2(91.87942f, 5.477522f);
-    private Vector2 startpos_5 = new Vector2(117.7591f, -2.522531f);
+  private Vector2 startpos_1 = new Vector2(14.18851f, -4.522478f);
+  private Vector2 startpos_2 = new Vector2(40.76052f, 5.477468f);
+  private Vector2 startpos_3 = new Vector2(66.0155f, 1.477522f);
+  private Vector2 startpos_4 = new Vector2(91.87942f, 5.477522f);
+  private Vector2 startpos_5 = new Vector2(117.7591f, -2.522531f);
 
 
-    private Rigidbody2D rb2d;
+  private Rigidbody2D rb2d;
   [SerializeField]
   private Sprite _normalForm;
   [SerializeField]
   private Sprite _demonForm;
   private SpriteRenderer _spriteRenderer;
   private Animator _playerAnimator;
+
   private bool _canchange = true;
   private bool _isFacingRight = true;
   private bool _demonBody = false;
-  [SerializeField]
+
   private bool _jumpingControl = false;
-  // Start is called before the first frame update
+
+  [SerializeField]
+  private AudioSource deathSound;
+
   void Start()
   {
     rb2d = GetComponent<Rigidbody2D>();
@@ -71,35 +75,36 @@ public class Player : MonoBehaviour
 
   void OnCollisionEnter2D(Collision2D col)
   {
-        if (col.gameObject.tag == "Diken")
-        {
-            switch (map)
-            {
-                case 0:
-                    rb2d.position = startpos_0;
-                    break;
-                case 1:
-                    rb2d.position = startpos_1;
-                    break;
-                case 2:
-                    rb2d.position = startpos_2;
-                    break;
-                case 3:
-                    rb2d.position = startpos_3;
-                    break;
-                case 4:
-                    rb2d.position = startpos_4;
-                    break;
-                case 5:
-                    rb2d.position = startpos_5;
-                    break;
-                default:
-                    rb2d.position = startpos_0;
-                    break;
-            }
-        }
-     if (col.gameObject.tag == "Floor")
-        {
+    if (col.gameObject.tag == "Diken")
+    {
+      deathSound.Play();
+      switch (map)
+      {
+        case 0:
+          rb2d.position = startpos_0;
+          break;
+        case 1:
+          rb2d.position = startpos_1;
+          break;
+        case 2:
+          rb2d.position = startpos_2;
+          break;
+        case 3:
+          rb2d.position = startpos_3;
+          break;
+        case 4:
+          rb2d.position = startpos_4;
+          break;
+        case 5:
+          rb2d.position = startpos_5;
+          break;
+        default:
+          rb2d.position = startpos_0;
+          break;
+      }
+    }
+    if (col.gameObject.tag == "Floor")
+    {
       _jumpingControl = false;
       JumpingAnimation();
       foreach (ContactPoint2D contact in col.contacts)
@@ -114,7 +119,7 @@ public class Player : MonoBehaviour
         }
       }
 
-        }
+    }
   }
 
   // Update is called once per frame
@@ -332,13 +337,13 @@ public class Player : MonoBehaviour
     {
       // Player is on the left, move camera one screen width to the left
       cameraPosition.x -= screenHalfWidthInWorldUnits * 2;
-            map--;
+      map--;
     }
     else if (transform.position.x > mainCamera.transform.position.x)
     {
       // Player is on the right, move camera one screen width to the right
       cameraPosition.x += screenHalfWidthInWorldUnits * 2;
-            map++;
+      map++;
     }
 
     // Apply the new camera position
