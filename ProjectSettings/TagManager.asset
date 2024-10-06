@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Floor
   - Wall
+  - Diken
   layers:
   - Default
   - TransparentFX
