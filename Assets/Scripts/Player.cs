@@ -23,7 +23,10 @@ public class Player : MonoBehaviour
   private bool isDashing = false;
   private bool isJumping = false;
 
-  public Camera mainCamera;
+    private float dashCooldown = 1.5f;
+    private float lastUsedDashTime;
+
+    public Camera mainCamera;
   private float screenHalfWidthInWorldUnits;
 
   private Vector2 startpos_0 = new Vector2(-10.66f, 4.477457f);
@@ -49,7 +52,7 @@ public class Player : MonoBehaviour
   // Start is called before the first frame update
   void Start()
   {
-    rb2d = GetComponent<Rigidbody2D>();
+        rb2d = GetComponent<Rigidbody2D>();
     rb2d.freezeRotation = true;
     _spriteRenderer = GetComponent<SpriteRenderer>();
     _spriteRenderer.sprite = _normalForm;
@@ -58,10 +61,13 @@ public class Player : MonoBehaviour
     _playerAnimator.SetBool("regularwalking", false);
     _playerAnimator.SetBool("ishumanjumping", false);
     screenHalfWidthInWorldUnits = mainCamera.aspect * mainCamera.orthographicSize;
-  }
+        
+    }
+
+    
 
 
-  void OnCollisionStay2D(Collision2D col)
+    void OnCollisionStay2D(Collision2D col)
   {
     if (col.gameObject.tag == "Floor")
     {
@@ -223,12 +229,13 @@ public class Player : MonoBehaviour
 
     float dashKey = Input.GetAxisRaw("DashKey");
 
-    if (dashKey != 0 && canDash)
+    if (dashKey != 0 && canDash && Time.time > lastUsedDashTime + dashCooldown)
     {
       canDash = false;
       isDashing = true;
       dashTimeLeft = dashDuration;
-    }
+            lastUsedDashTime = Time.time;
+        }
 
     if (isDashing)
     {
