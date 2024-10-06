@@ -68,6 +68,7 @@ public class Player : MonoBehaviour
     _playerAnimator.SetBool("isitnormalform", true);
     _playerAnimator.SetBool("regularwalking", false);
     _playerAnimator.SetBool("ishumanjumping", false);
+    _playerAnimator.SetBool("isdemondashing", false);
     screenHalfWidthInWorldUnits = mainCamera.aspect * mainCamera.orthographicSize;
 
   }
@@ -247,6 +248,7 @@ public class Player : MonoBehaviour
 
     if (dashKey != 0 && canDash && Time.time > lastUsedDashTime + dashCooldown)
     {
+      _playerAnimator.SetBool("isdemondashing", true);
       canDash = false;
       isDashing = true;
       dashTimeLeft = dashDuration;
@@ -277,6 +279,7 @@ public class Player : MonoBehaviour
       dashTimeLeft -= Time.deltaTime;
       if (dashTimeLeft <= 0)
       {
+        _playerAnimator.SetBool("isdemondashing", false);
         isDashing = false;
       }
       rb2d.MovePosition(rb2d.position + movement);
