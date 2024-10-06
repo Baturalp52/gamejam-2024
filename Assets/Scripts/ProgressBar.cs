@@ -7,7 +7,7 @@ public class ProgressBar : MonoBehaviour
 {
   public Image bar;
 
-  private int maxDuration = 10;
+  private int maxDuration = 60;
   private float currentDuration = 0;
 
   private Player player;
