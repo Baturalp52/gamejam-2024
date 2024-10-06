@@ -25,7 +25,9 @@ public class Player : MonoBehaviour
   public Camera mainCamera;
   private float screenHalfWidthInWorldUnits;
 
-  private Rigidbody2D rb2d;
+  private Vector2 startpos = new Vector2(-11.11f, 4.5f);
+
+    private Rigidbody2D rb2d;
   [SerializeField]
   private Sprite _normalForm;
   [SerializeField]
@@ -62,8 +64,14 @@ public class Player : MonoBehaviour
 
   void OnCollisionEnter2D(Collision2D col)
   {
-    if (col.gameObject.tag == "Floor")
-    {
+        if (col.gameObject.tag == "Diken")
+        {
+
+            rb2d.position = startpos;
+        }
+
+     if (col.gameObject.tag == "Floor")
+        {
       _jumpingControl = false;
       JumpingAnimation();
       foreach (ContactPoint2D contact in col.contacts)
@@ -78,7 +86,7 @@ public class Player : MonoBehaviour
         }
       }
 
-    }
+        }
   }
 
   // Update is called once per frame
