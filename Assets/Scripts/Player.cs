@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Tilemaps;
+using UnityEngine.Tilemaps;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -57,6 +57,12 @@ public class Player : MonoBehaviour
 
   [SerializeField]
   private AudioSource deathSound;
+  [SerializeField]
+  private AudioSource dashSound;
+  [SerializeField]
+  private AudioSource changingSound;
+  [SerializeField]
+  private AudioSource jumpingSound;
 
   void Start()
   {
@@ -164,6 +170,7 @@ public class Player : MonoBehaviour
   private void ChangingForm()
   {
     if (!Input.GetKeyDown(KeyCode.C)) return;
+    changingSound.Play();
     _playerAnimator.SetBool("isitnormalform", !_canchange);
 
     _demonBody = !_demonBody;
@@ -219,6 +226,7 @@ public class Player : MonoBehaviour
         isJumping = true;
         jumpTimeLeft = jumpTime;
         canJump = false;
+        jumpingSound.Play();
       }
       else
       {
@@ -248,6 +256,7 @@ public class Player : MonoBehaviour
 
     if (dashKey != 0 && canDash && Time.time > lastUsedDashTime + dashCooldown)
     {
+      dashSound.Play();
       _playerAnimator.SetBool("isdemondashing", true);
       canDash = false;
       isDashing = true;
