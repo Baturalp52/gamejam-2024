@@ -23,8 +23,9 @@ public class Player : MonoBehaviour
   private bool isDashing = false;
   private bool isJumping = false;
 
-    private float dashCooldown = 1.5f;
-    private float lastUsedDashTime;
+
+  private float dashCooldown = 1.5f;
+  private float lastUsedDashTime;
 
   private float screenHalfWidthInWorldUnits;
   public Camera mainCamera;
@@ -48,6 +49,9 @@ public class Player : MonoBehaviour
   private bool _canchange = true;
   private bool _isFacingRight = true;
   private bool _demonBody = false;
+  private bool _isDead = false;
+  private bool _isMapChanged = false;
+
 
   private bool _jumpingControl = false;
 
@@ -56,7 +60,7 @@ public class Player : MonoBehaviour
 
   void Start()
   {
-        rb2d = GetComponent<Rigidbody2D>();
+    rb2d = GetComponent<Rigidbody2D>();
     rb2d.freezeRotation = true;
     _spriteRenderer = GetComponent<SpriteRenderer>();
     _spriteRenderer.sprite = _normalForm;
@@ -65,13 +69,13 @@ public class Player : MonoBehaviour
     _playerAnimator.SetBool("regularwalking", false);
     _playerAnimator.SetBool("ishumanjumping", false);
     screenHalfWidthInWorldUnits = mainCamera.aspect * mainCamera.orthographicSize;
-        
-    }
 
-    
+  }
 
 
-    void OnCollisionStay2D(Collision2D col)
+
+
+  void OnCollisionStay2D(Collision2D col)
   {
     if (col.gameObject.tag == "Floor")
     {
@@ -84,6 +88,12 @@ public class Player : MonoBehaviour
     if (col.gameObject.tag == "Diken")
     {
       deathSound.Play();
+      _playerAnimator.SetBool("isitnormalform", true);
+
+      _demonBody = false;
+      _canchange = true;
+
+      _isDead = !_isDead;
       switch (map)
       {
         case 0:
@@ -108,6 +118,7 @@ public class Player : MonoBehaviour
           rb2d.position = startpos_0;
           break;
       }
+
     }
     if (col.gameObject.tag == "Floor")
     {
@@ -239,8 +250,8 @@ public class Player : MonoBehaviour
       canDash = false;
       isDashing = true;
       dashTimeLeft = dashDuration;
-            lastUsedDashTime = Time.time;
-        }
+      lastUsedDashTime = Time.time;
+    }
 
     if (isDashing)
     {
@@ -298,6 +309,18 @@ public class Player : MonoBehaviour
     return _playerAnimator;
   }
 
+  public void restartFromStart()
+  {
+    deathSound.Play();
+    rb2d.position = startpos_0;
+    map = 0;
+
+    _playerAnimator.SetBool("isitnormalform", true);
+
+    _demonBody = false;
+    _canchange = true;
+  }
+
   private void JumpingAnimation()
   {
     if (_jumpingControl == true)
@@ -345,16 +368,29 @@ public class Player : MonoBehaviour
       // Player is on the left, move camera one screen width to the left
       cameraPosition.x -= screenHalfWidthInWorldUnits * 2;
       map--;
+      _isMapChanged = !_isMapChanged;
     }
     else if (transform.position.x > mainCamera.transform.position.x)
     {
       // Player is on the right, move camera one screen width to the right
       cameraPosition.x += screenHalfWidthInWorldUnits * 2;
       map++;
+      _isMapChanged = !_isMapChanged;
     }
 
     // Apply the new camera position
     mainCamera.transform.position = cameraPosition;
+  }
+
+
+  public bool getIsDead()
+  {
+    return _isDead;
+  }
+
+  public bool getIsMapChanged()
+  {
+    return _isMapChanged;
   }
 
 }
